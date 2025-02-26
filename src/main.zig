@@ -1,8 +1,17 @@
 const std = @import("std");
-const bitmasks = @import("bitmasks.zig");
-const magic = @import("util/magic_numbers.zig");
+const stdout = std.io.getStdOut().writer();
+
+const Position = @import("position.zig").Position;
 
 pub fn main() !void {
-    _ = try magic.generate_rook_magics(bitmasks.ROOK_PRE);
-    _ = try magic.generate_bishop_magics(bitmasks.BISHOP_PRE);
+    const args = try std.process.argsAlloc(std.heap.page_allocator);
+    defer std.process.argsFree(std.heap.page_allocator, args);
+
+    if (args.len < 2) return error.ExpectedArgument;
+
+    const pos = try Position.parseFen(args[1]);
+    const moves = try pos.generateMoves(std.heap.page_allocator);
+    defer moves.deinit();
+
+    try stdout.print("legal moves found: {d}\n", .{moves.items.len});
 }
