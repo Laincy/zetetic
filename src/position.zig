@@ -1,6 +1,5 @@
 const std = @import("std");
 const ArrayList = std.ArrayList;
-const stdout = std.io.getStdOut().writer();
 
 const bitmasks = @import("bitmasks.zig");
 
@@ -11,7 +10,7 @@ pub const Position = struct {
     enpassant: ?u6 = null,
     to_move: bool,
 
-    const starting_position = Position{
+    pub const starting_position = Position{
         .pieces = .{ 0xff00, 0x42, 0x24, 0x81, 0x8, 0x10, 0xff000000000000, 0x4200000000000000, 0x2400000000000000, 0x8100000000000000, 0x800000000000000, 0x1000000000000000 },
         .castle = 0b1111,
         .enpassant = null,

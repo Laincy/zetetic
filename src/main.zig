@@ -3,6 +3,8 @@ const stdout = std.io.getStdOut().writer();
 
 const Position = @import("position.zig").Position;
 
+const evaluate = @import("eval.zig").evaluate;
+
 pub fn main() !void {
     const args = try std.process.argsAlloc(std.heap.page_allocator);
     defer std.process.argsFree(std.heap.page_allocator, args);
@@ -14,4 +16,10 @@ pub fn main() !void {
     defer moves.deinit();
 
     try stdout.print("legal moves found: {d}\n", .{moves.items.len});
+
+    var best_val: i16 = undefined;
+
+    for ()
+
+    try stdout.print("evaluation {d}\n", .{evaluate(&pos)});
 }
